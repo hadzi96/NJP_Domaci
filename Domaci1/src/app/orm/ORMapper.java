@@ -3,7 +3,6 @@ package app.orm;
 public class ORMapper {
 
 	public boolean insert(Object obj) {
-		// comm
 		return false;
 	}
 

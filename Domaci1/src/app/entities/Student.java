@@ -1,5 +1,7 @@
 package app.entities;
 
+import java.util.Date;
+
 import app.annotations.Column;
 import app.annotations.Entity;
 import app.annotations.Table;
@@ -9,6 +11,12 @@ import app.annotations.Table;
 public class Student extends BasicEntity {
 	@Column(name = "ime")
 	private String ime;
+
+	private float nekiParametar = 55.5f;
+
+	private Ocena ocena = new Ocena();
+
+	private Date datum = new java.sql.Date(System.currentTimeMillis());
 
 	@Column(name = "prezime")
 	private String prezime;

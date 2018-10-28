@@ -14,7 +14,7 @@ public class Student extends BasicEntity {
 
 	private float nekiParametar = 55.5f;
 
-	private Ocena ocena = new Ocena();
+	private Ocena ocena = new Ocena("Napredna Java", 10);
 
 	private Date datum = new java.sql.Date(System.currentTimeMillis());
 
@@ -22,7 +22,7 @@ public class Student extends BasicEntity {
 	private String prezime;
 
 	public Student(String ime, String prezime) {
-		super(100);
+		super(1);
 		this.ime = ime;
 		this.prezime = prezime;
 	}

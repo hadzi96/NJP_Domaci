@@ -8,7 +8,6 @@ import java.util.Arrays;
 import app.annotations.Entity;
 import app.annotations.Id;
 import app.annotations.Table;
-import app.entities.Ocena;
 
 public class ORMapper {
 
@@ -26,6 +25,8 @@ public class ORMapper {
 		String rows = "";
 		String values = "";
 
+		// prilikom prolaska kroz sva polja treba proveriti anotacije svakog polja i
+		// izvrsiti izmene na osnovu tih annotacija
 		for (Polje p : polja) {
 			rows += p.name + ", ";
 			if (p.type.equals("class java.lang.String"))
@@ -57,6 +58,7 @@ public class ORMapper {
 				field.setAccessible(true);
 				Object value = field.get(obj);
 
+				// ovo treba premestiti negde drugde jer ova metoda samo treba da vrati polja
 				if (type.isAnnotationPresent(Entity.class)) {
 					Object id = getId(value);
 					if (id == null) {

@@ -22,7 +22,7 @@ public class Student extends BasicEntity {
 	private String prezime;
 
 	public Student(String ime, String prezime) {
-		super();
+		super(100);
 		this.ime = ime;
 		this.prezime = prezime;
 	}

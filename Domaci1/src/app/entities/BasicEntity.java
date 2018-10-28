@@ -10,6 +10,10 @@ public abstract class BasicEntity {
 	@Column(name = "ID")
 	private int id;
 
+	public BasicEntity(int id) {
+		this.id = id;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

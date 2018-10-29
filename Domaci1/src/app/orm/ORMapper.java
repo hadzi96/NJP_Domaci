@@ -11,7 +11,7 @@ import app.annotations.Table;
 
 public class ORMapper {
 
-	public boolean insert(Object obj) throws Exception {
+	public static boolean insert(Object obj) {
 		if (!obj.getClass().isAnnotationPresent(Entity.class)) {
 			return false;
 		}
@@ -45,7 +45,7 @@ public class ORMapper {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private ArrayList<Polje> getPolja(Object obj) {
+	private static ArrayList<Polje> getPolja(Object obj) {
 		try {
 			Class cl = obj.getClass();
 			ArrayList<Field> fields = new ArrayList<>();
@@ -77,13 +77,13 @@ public class ORMapper {
 
 			return polja;
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 			return null;
 		}
 	}
 
 	@SuppressWarnings("rawtypes")
-	private String getTableName(Object obj) {
+	private static String getTableName(Object obj) {
 		try {
 			String tableName = null;
 			Class cl = obj.getClass();
@@ -107,7 +107,7 @@ public class ORMapper {
 
 	}
 
-	private ArrayList<Field> getAllFields(ArrayList<Field> fields, Class<?> type) {
+	private static ArrayList<Field> getAllFields(ArrayList<Field> fields, Class<?> type) {
 
 		if (type.getSuperclass() != null) {
 			getAllFields(fields, type.getSuperclass());
@@ -117,7 +117,7 @@ public class ORMapper {
 		return fields;
 	}
 
-	private Object getId(Object obj) {
+	private static Object getId(Object obj) {
 		try {
 			Class<?> cl = obj.getClass();
 			ArrayList<Field> fields = new ArrayList<>();
@@ -135,7 +135,7 @@ public class ORMapper {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 
 		return null;

@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 
 import app.annotations.Entity;
+import app.orm.ORMapper;
 
 @Aspect
 public class AspectORM {
@@ -15,14 +16,14 @@ public class AspectORM {
 
 	@After("set(* *) && @annotation(app.annotations.Column) && args(newValue)")
 	public void interceptWrite(JoinPoint thisJoinPoint, Object newValue) {
-		
+
 		if (!thisJoinPoint.getTarget().getClass().isAnnotationPresent(Entity.class))
 			return;
 
 		if (!insertedObj.contains(thisJoinPoint.getTarget())) {
-			System.out.println("INSERT!!");
-			insertedObj.add(thisJoinPoint.getTarget());
-		}else {
+			if (ORMapper.insert(thisJoinPoint.getTarget()))
+				insertedObj.add(thisJoinPoint.getTarget());
+		} else {
 			System.out.println("UPDATE!!");
 		}
 

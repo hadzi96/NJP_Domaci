@@ -10,13 +10,13 @@ public class Main {
 		Student st = new Student("Filip", "Hadzi-Ristic");
 		System.out.println("----------");
 		st.setIme("Ficko");
-		/*ORMapper mapper = new ORMapper();
+		ORMapper mapper = new ORMapper();
 
 		try {
 			mapper.insert(st);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
+		}
 	}
 
 }

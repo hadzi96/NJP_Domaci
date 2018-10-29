@@ -11,7 +11,7 @@ import app.annotations.Table;
 
 public class ORMapper {
 
-	public static boolean insert(Object obj) {
+	public boolean insert(Object obj) {
 		if (!obj.getClass().isAnnotationPresent(Entity.class)) {
 			return false;
 		}
@@ -45,7 +45,7 @@ public class ORMapper {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private static ArrayList<Polje> getPolja(Object obj) {
+	private ArrayList<Polje> getPolja(Object obj) {
 		try {
 			Class cl = obj.getClass();
 			ArrayList<Field> fields = new ArrayList<>();
@@ -83,7 +83,7 @@ public class ORMapper {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private static String getTableName(Object obj) {
+	private String getTableName(Object obj) {
 		try {
 			String tableName = null;
 			Class cl = obj.getClass();
@@ -107,7 +107,7 @@ public class ORMapper {
 
 	}
 
-	private static ArrayList<Field> getAllFields(ArrayList<Field> fields, Class<?> type) {
+	private ArrayList<Field> getAllFields(ArrayList<Field> fields, Class<?> type) {
 
 		if (type.getSuperclass() != null) {
 			getAllFields(fields, type.getSuperclass());
@@ -117,7 +117,7 @@ public class ORMapper {
 		return fields;
 	}
 
-	private static Object getId(Object obj) {
+	private Object getId(Object obj) {
 		try {
 			Class<?> cl = obj.getClass();
 			ArrayList<Field> fields = new ArrayList<>();

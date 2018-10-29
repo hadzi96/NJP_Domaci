@@ -1,6 +1,5 @@
 package app.aspects;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import org.aspectj.lang.JoinPoint;
@@ -9,8 +8,6 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
-import app.annotations.Entity;
-import app.orm.MapperFunctions;
 import app.orm.ORMapper;
 
 @Aspect

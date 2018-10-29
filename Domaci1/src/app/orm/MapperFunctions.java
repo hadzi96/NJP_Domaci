@@ -97,4 +97,42 @@ public class MapperFunctions {
 		return name;
 	}
 
+	public static boolean isComplexType(Polje p) throws Exception {
+		if (p.type.isAnnotationPresent(Entity.class)) {
+			Object id = MapperFunctions.getId(p.value);
+			if (id == null) {
+				throw new Exception("Podpolje " + p.name + " ne sadrzi polje sa id anotacijom");
+			} else {
+				return true;
+			}
+
+		}
+		return false;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public static ArrayList<Polje> getPolja(Object obj) {
+		try {
+			Class cl = obj.getClass();
+			ArrayList<Field> fields = new ArrayList<>();
+			fields = MapperFunctions.getAllFields(fields, cl);
+			ArrayList<Polje> polja = new ArrayList<>();
+
+			for (Field field : fields) {
+				Class<?> type = field.getType();
+				String name = field.getName();
+				field.setAccessible(true);
+				Object value = field.get(obj);
+
+				Polje p = new Polje(type, name, value);
+				polja.add(p);
+			}
+
+			return polja;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return null;
+		}
+	}
+
 }

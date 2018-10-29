@@ -5,6 +5,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.aspectj.lang.JoinPoint;
+
 import app.annotations.Entity;
 import app.annotations.Id;
 import app.annotations.Table;
@@ -112,8 +114,14 @@ public class ORMapper {
 		if (type.getSuperclass() != null) {
 			getAllFields(fields, type.getSuperclass());
 		}
-		fields.addAll(Arrays.asList(type.getDeclaredFields()));
+		// fields.addAll(Arrays.asList(type.getDeclaredFields()));
 
+		for (Field f : type.getDeclaredFields()) {
+
+			if (f.getType() != JoinPoint.StaticPart.class) {
+				fields.add(f);
+			}
+		}
 		return fields;
 	}
 

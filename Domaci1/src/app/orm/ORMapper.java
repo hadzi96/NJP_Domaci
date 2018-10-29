@@ -114,8 +114,8 @@ public class ORMapper {
 		if (type.getSuperclass() != null) {
 			getAllFields(fields, type.getSuperclass());
 		}
-		// fields.addAll(Arrays.asList(type.getDeclaredFields()));
 
+		// izbacujemo polja koja se javljaju usled JoinPoint-a
 		for (Field f : type.getDeclaredFields()) {
 
 			if (f.getType() != JoinPoint.StaticPart.class) {

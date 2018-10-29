@@ -14,6 +14,8 @@ public class Main {
 
 		try {
 			mapper.insert(st);
+
+			st.setIme("Ficko");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

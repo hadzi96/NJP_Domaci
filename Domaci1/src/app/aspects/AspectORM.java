@@ -33,8 +33,9 @@ public class AspectORM {
 	@After("set(* *) && @annotation(app.annotations.Column) && args(newValue)")
 	public void interceptWrite(JoinPoint thisJoinPoint, Object newValue) {
 
-		if (!thisJoinPoint.getTarget().getClass().isAnnotationPresent(Entity.class))
-			return;
+		if (insertedObj.contains(thisJoinPoint.getTarget())) {
+			System.out.println("Update");
+		}
 
 	}
 

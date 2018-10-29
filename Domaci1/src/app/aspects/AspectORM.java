@@ -17,6 +17,7 @@ import app.orm.ORMapper;
 public class AspectORM {
 
 	ArrayList<Object> insertedObj = new ArrayList<>();
+	ORMapper mapper = new ORMapper();
 
 	@Around("execution(public boolean ORMapper.insert(Object))")
 	public boolean interceptInsert(ProceedingJoinPoint pjp) {
@@ -35,28 +36,7 @@ public class AspectORM {
 	public void interceptWrite(JoinPoint thisJoinPoint, Object newValue) {
 
 		if (insertedObj.contains(thisJoinPoint.getTarget())) {
-			try {
-				Object obj = thisJoinPoint.getTarget();
-				Class<?> cl = obj.getClass();
-				ArrayList<Field> fields = new ArrayList<>();
-				fields = MapperFunctions.getAllFields(fields, cl);
-				String name = "";
-
-				for (Field field : fields) {
-					field.setAccessible(true);
-					Object value = field.get(obj);
-
-					if (value == newValue) {
-						name = field.getName();
-						break;
-					}
-
-				}
-
-				System.out.println("Update [" + name + "] to -> " + newValue);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			mapper.update(thisJoinPoint.getTarget(), newValue);
 		}
 
 	}

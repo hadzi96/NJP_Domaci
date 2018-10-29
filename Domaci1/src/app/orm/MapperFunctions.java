@@ -77,4 +77,24 @@ public class MapperFunctions {
 		return null;
 	}
 
+	public static String getNameFromObj(Object holder, Object obj) throws Exception {
+		Class<?> cl = holder.getClass();
+		ArrayList<Field> fields = new ArrayList<>();
+		fields = MapperFunctions.getAllFields(fields, cl);
+		String name = null;
+
+		for (Field field : fields) {
+			field.setAccessible(true);
+			Object value = field.get(holder);
+
+			if (value == obj) {
+				name = field.getName();
+				break;
+			}
+
+		}
+
+		return name;
+	}
+
 }

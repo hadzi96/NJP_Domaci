@@ -39,6 +39,23 @@ public class ORMapper {
 		return true;
 	}
 
+	public boolean update(Object obj, Object entry) {
+		try {
+			if (!obj.getClass().isAnnotationPresent(Entity.class)) {
+				return false;
+			}
+
+			String name = MapperFunctions.getNameFromObj(obj, entry);
+
+			System.out.println(name + "->" + entry);
+
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	@SuppressWarnings("rawtypes")
 	private ArrayList<Polje> getPolja(Object obj) {
 		try {

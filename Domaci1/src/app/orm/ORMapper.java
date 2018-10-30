@@ -31,18 +31,18 @@ public class ORMapper {
 			for (Polje p : polja) {
 
 				if (MapperFunctions.isComplexType(p)) {
-					if (p.type.isAnnotationPresent(OneToOne.class))
+					if (p.field.isAnnotationPresent(OneToOne.class))
 						OneToOneInsert(p);
 					else {
-						if (p.type.isAnnotationPresent(OneToMany.class))
+						if (p.field.isAnnotationPresent(OneToMany.class))
 							OneToManyInsert(p);
 						else {
 
-							if (p.type.isAnnotationPresent(ManyToOne.class))
+							if (p.field.isAnnotationPresent(ManyToOne.class))
 								ManyToOneInsert(p);
 							else {
 
-								if (p.type.isAnnotationPresent(ManyToMany.class))
+								if (p.field.isAnnotationPresent(ManyToMany.class))
 									ManyToManyInsert(p);
 							}
 						}

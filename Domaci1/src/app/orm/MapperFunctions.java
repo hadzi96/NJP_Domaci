@@ -124,7 +124,7 @@ public class MapperFunctions {
 				field.setAccessible(true);
 				Object value = field.get(obj);
 
-				Polje p = new Polje(type, name, value);
+				Polje p = new Polje(field, type, name, value);
 				polja.add(p);
 			}
 

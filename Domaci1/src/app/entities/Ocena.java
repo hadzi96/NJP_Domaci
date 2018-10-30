@@ -2,6 +2,7 @@ package app.entities;
 
 import app.annotations.Entity;
 import app.annotations.Id;
+import app.annotations.OneToOne;
 import app.annotations.Table;
 
 @Entity

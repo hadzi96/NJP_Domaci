@@ -4,6 +4,7 @@ import java.util.Date;
 
 import app.annotations.Column;
 import app.annotations.Entity;
+import app.annotations.OneToOne;
 import app.annotations.Table;
 
 @Entity
@@ -14,6 +15,7 @@ public class Student extends BasicEntity {
 
 	private float nekiParametar = 55.5f;
 
+	@OneToOne
 	private Ocena ocena = new Ocena("Napredna Java", 10);
 
 	private Date datum = new java.sql.Date(System.currentTimeMillis());

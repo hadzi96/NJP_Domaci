@@ -4,6 +4,10 @@ import java.lang.reflect.Field;
 import java.time.chrono.IsoChronology;
 import java.util.ArrayList;
 import app.annotations.Entity;
+import app.annotations.ManyToMany;
+import app.annotations.ManyToOne;
+import app.annotations.OneToMany;
+import app.annotations.OneToOne;
 
 public class ORMapper {
 
@@ -27,13 +31,25 @@ public class ORMapper {
 			for (Polje p : polja) {
 
 				if (MapperFunctions.isComplexType(p)) {
-					insert(p.value);
-					Object id = MapperFunctions.getId(p.value);
+					if (p.type.isAnnotationPresent(OneToOne.class))
+						OneToOneInsert(p);
+					else {
+						if (p.type.isAnnotationPresent(OneToMany.class))
+							OneToManyInsert(p);
+						else {
 
-					p.value = id;
-					p.type = id.getClass();
+							if (p.type.isAnnotationPresent(ManyToOne.class))
+								ManyToOneInsert(p);
+							else {
+
+								if (p.type.isAnnotationPresent(ManyToMany.class))
+									ManyToManyInsert(p);
+							}
+						}
+					}
 				}
 
+				// sredjivanje query stringa
 				rows += p.name + ", ";
 				if (p.type == String.class)
 					values += "'" + p.value + "', ";
@@ -69,6 +85,26 @@ public class ORMapper {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	private void OneToOneInsert(Polje p) {
+		insert(p.value);
+		Object id = MapperFunctions.getId(p.value);
+
+		p.value = id;
+		p.type = id.getClass();
+	}
+
+	private void OneToManyInsert(Polje p) {
+
+	}
+
+	private void ManyToOneInsert(Polje p) {
+
+	}
+
+	private void ManyToManyInsert(Polje p) {
+
 	}
 
 }

@@ -16,6 +16,8 @@ public class Main {
 			mapper.insert(st);
 			// Thread.sleep(3000);
 			st.setIme("Ficko");
+			st.getOcena().setPredmet("TataMata");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

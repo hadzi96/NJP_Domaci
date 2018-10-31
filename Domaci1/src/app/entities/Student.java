@@ -54,4 +54,36 @@ public class Student extends BasicEntity {
 		this.prezime = prezime;
 	}
 
+	public float getNekiParametar() {
+		return nekiParametar;
+	}
+
+	public void setNekiParametar(float nekiParametar) {
+		this.nekiParametar = nekiParametar;
+	}
+
+	public Ocena getOcena() {
+		return ocena;
+	}
+
+	public void setOcena(Ocena ocena) {
+		this.ocena = ocena;
+	}
+
+	public Collection<Ocena> getSkupOcena() {
+		return skupOcena;
+	}
+
+	public void setSkupOcena(Collection<Ocena> skupOcena) {
+		this.skupOcena = skupOcena;
+	}
+
+	public Date getDatum() {
+		return datum;
+	}
+
+	public void setDatum(Date datum) {
+		this.datum = datum;
+	}
+
 }

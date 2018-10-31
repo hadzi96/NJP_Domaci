@@ -89,7 +89,7 @@ public class MapperFunctions {
 			field.setAccessible(true);
 			Object value = field.get(holder);
 
-			if (value == obj) {
+			if (value == obj || value.equals(obj)) {
 				name = field.getName();
 				break;
 			}

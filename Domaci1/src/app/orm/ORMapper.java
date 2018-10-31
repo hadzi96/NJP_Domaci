@@ -91,9 +91,32 @@ public class ORMapper {
 				String entryName = MapperFunctions.getNameFromObj(obj, entry);
 				String entryValue = entry.toString();
 
-				sqlUpit = String.format("UPDATE %s SET %s = %s", tableName, entryName, entryValue);
-			} else {
+				Object id = MapperFunctions.getId(obj);
+				String idName = MapperFunctions.getNameFromObj(obj, id);
 
+				sqlUpit = String.format("UPDATE %s SET %s = %s WHERE %s = %s", tableName, entryName, entryValue, idName,
+						id);
+			} else {
+				ArrayList<Polje> polja = MapperFunctions.getPolja(obj);
+				String table = MapperFunctions.getTableName(obj);
+				if (polja == null || table == null) {
+					return false;
+				}
+
+				Object id = MapperFunctions.getId(entry);
+				String idName = MapperFunctions.getNameFromObj(entry, id);
+				sqlUpit = "UPDATE " + table + " SET %s WHERE " + idName + "= " + id;
+				String updateParam = "";
+
+				for (Polje p : polja) {
+					if (p.type == String.class) {
+						updateParam += p.name + " = '" + p.value + "', ";
+					} else {
+						updateParam += p.name + " = " + p.value + ", ";
+					}
+				}
+				updateParam = updateParam.substring(0, updateParam.length() - 2);
+				sqlUpit = String.format(sqlUpit, updateParam);
 			}
 
 			System.out.println(sqlUpit);

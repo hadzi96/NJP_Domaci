@@ -48,7 +48,7 @@ public class ORMapper {
 							sqlUpit += OneToManyInsert(obj, p);
 						} else {
 							if (p.field.isAnnotationPresent(ManyToOne.class)) {
-								ManyToOneInsert(p);
+								sqlUpit += ManyToOneInsert(obj, p);
 							} else {
 								if (p.field.isAnnotationPresent(ManyToMany.class)) {
 									ManyToManyInsert(p);
@@ -143,8 +143,24 @@ public class ORMapper {
 		return retSql;
 	}
 
-	private void ManyToOneInsert(Polje p) {
+	private String ManyToOneInsert(Object obj, Polje p) throws Exception {
 
+		if (!(insert(p.value))) {
+			throw new Exception(p.name + " mora da bude Entity");
+		}
+
+		String tableName = MapperFunctions.getTableName(obj) + "_" + MapperFunctions.getTableName(p.value);
+
+		String firstId = MapperFunctions.getTableName(obj) + "ID";
+		String secondId = MapperFunctions.getTableName(p.value) + "ID";
+
+		String firstIdVal = MapperFunctions.getId(obj).toString();
+		String secondIdVal = MapperFunctions.getId(p.value).toString();
+
+		String retSql = String.format("\nINSERT INTO %s (%s, %s) VALUES (%s, %s)", tableName, firstId, secondId,
+				firstIdVal, secondIdVal);
+
+		return retSql;
 	}
 
 	private void ManyToManyInsert(Polje p) {

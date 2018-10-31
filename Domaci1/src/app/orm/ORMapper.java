@@ -84,11 +84,19 @@ public class ORMapper {
 			if (!obj.getClass().isAnnotationPresent(Entity.class)) {
 				return false;
 			}
+			String sqlUpit = "";
 
-			String name = MapperFunctions.getNameFromObj(obj, entry);
+			if (!entry.getClass().isAnnotationPresent(Entity.class)) {
+				String tableName = MapperFunctions.getTableName(obj);
+				String entryName = MapperFunctions.getNameFromObj(obj, entry);
+				String entryValue = entry.toString();
 
-			System.out.println("update: " + name + "->" + entry);
+				sqlUpit = String.format("UPDATE %s SET %s = %s", tableName, entryName, entryValue);
+			} else {
 
+			}
+
+			System.out.println(sqlUpit);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

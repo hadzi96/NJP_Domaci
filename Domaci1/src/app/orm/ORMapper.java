@@ -3,6 +3,10 @@ package app.orm;
 import java.lang.reflect.Field;
 import java.time.chrono.IsoChronology;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
 import app.annotations.Entity;
 import app.annotations.ManyToMany;
 import app.annotations.ManyToOne;
@@ -41,7 +45,7 @@ public class ORMapper {
 							values += p.value + ", ";
 					} else {
 						if (p.field.isAnnotationPresent(OneToMany.class)) {
-							OneToManyInsert(p);
+							sqlUpit += OneToManyInsert(obj, p);
 						} else {
 							if (p.field.isAnnotationPresent(ManyToOne.class)) {
 								ManyToOneInsert(p);
@@ -100,8 +104,43 @@ public class ORMapper {
 		p.type = id.getClass();
 	}
 
-	private void OneToManyInsert(Polje p) {
+	private String OneToManyInsert(Object obj, Polje p) throws Exception {
+		if (!(p.value instanceof Collection<?>)) {
+			throw new Exception("Podpolje " + p.name + " nije collection.. OneToMany disallowed");
+		}
+		Collection<Object> col = (Collection<Object>) p.value;
+		Iterator<Object> iterator = col.iterator();
+		if (col.isEmpty()) {
+			return "";
+		}
+		Object o = null;
+		while (iterator.hasNext()) {
+			o = iterator.next();
+			if (!(insert(o))) {
+				throw new Exception("Collection " + p.name + " mora da sadrzi Entitije");
+			}
+		}
 
+		String retSql = "";
+
+		iterator = col.iterator();
+		while (iterator.hasNext()) {
+			o = iterator.next();
+
+			String tableName = MapperFunctions.getTableName(obj) + "_" + MapperFunctions.getTableName(o);
+
+			String firstId = MapperFunctions.getTableName(obj) + "ID";
+			String secondId = MapperFunctions.getTableName(o) + "ID";
+
+			String firstIdVal = MapperFunctions.getId(obj).toString();
+			String secondIdVal = MapperFunctions.getId(o).toString();
+			String sql = String.format("\nINSERT INTO %s (%s, %s) VALUES (%s, %s)", tableName, firstId, secondId,
+					firstIdVal, secondIdVal);
+
+			retSql += sql;
+		}
+
+		return retSql;
 	}
 
 	private void ManyToOneInsert(Polje p) {

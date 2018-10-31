@@ -3,6 +3,7 @@ package app.orm;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.aspectj.lang.JoinPoint;
 
@@ -99,7 +100,11 @@ public class MapperFunctions {
 	}
 
 	public static boolean isComplexType(Polje p) throws Exception {
+		if (p.value instanceof Collection<?>)
+			return true;
+
 		if (p.type.isAnnotationPresent(Entity.class)) {
+
 			Object id = MapperFunctions.getId(p.value);
 			if (id == null) {
 				throw new Exception("Podpolje " + p.name + " ne sadrzi polje sa id anotacijom");
@@ -108,6 +113,7 @@ public class MapperFunctions {
 			}
 
 		}
+		// System.out.println("false: " + p.name);
 		return false;
 	}
 

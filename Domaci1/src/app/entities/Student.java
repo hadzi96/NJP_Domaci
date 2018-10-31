@@ -1,9 +1,12 @@
 package app.entities;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import app.annotations.Column;
 import app.annotations.Entity;
+import app.annotations.OneToMany;
 import app.annotations.OneToOne;
 import app.annotations.Table;
 
@@ -18,6 +21,9 @@ public class Student extends BasicEntity {
 	@OneToOne
 	private Ocena ocena = new Ocena("Napredna Java", 10);
 
+	@OneToMany
+	private Collection<Ocena> skupOcena = new ArrayList<>();
+
 	private Date datum = new java.sql.Date(System.currentTimeMillis());
 
 	@Column(name = "prezime")
@@ -27,6 +33,9 @@ public class Student extends BasicEntity {
 		super(1);
 		this.ime = ime;
 		this.prezime = prezime;
+
+		skupOcena.add(ocena);
+		skupOcena.add(ocena);
 	}
 
 	public String getIme() {

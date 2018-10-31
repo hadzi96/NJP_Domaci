@@ -38,7 +38,7 @@ public class ORMapper {
 					if (p.field.isAnnotationPresent(OneToOne.class)) {
 						OneToOneInsert(p);
 
-						rows += p.name + ", ";
+						rows += p.name + "_key, ";
 						if (p.type == String.class)
 							values += "'" + p.value + "', ";
 						else
@@ -85,7 +85,7 @@ public class ORMapper {
 				return false;
 			}
 			String sqlUpit = "";
-
+			
 			if (!entry.getClass().isAnnotationPresent(Entity.class)) {
 				String tableName = MapperFunctions.getTableName(obj);
 				String entryName = MapperFunctions.getNameFromObj(obj, entry);
@@ -103,19 +103,20 @@ public class ORMapper {
 					return false;
 				}
 
-				Object id = MapperFunctions.getId(entry);
-				String idName = MapperFunctions.getNameFromObj(entry, id);
-				sqlUpit = "UPDATE " + table + " SET %s WHERE " + idName + "= " + id;
+				Object id = MapperFunctions.getId(obj);
+				String idName = MapperFunctions.getNameFromObj(obj, id);
+				sqlUpit = "UPDATE " + table + " SET %s WHERE " + idName + " = " + id;
 				String updateParam = "";
 
-				for (Polje p : polja) {
-					if (p.type == String.class) {
-						updateParam += p.name + " = '" + p.value + "', ";
-					} else {
-						updateParam += p.name + " = " + p.value + ", ";
-					}
+				String entryName = MapperFunctions.getNameFromObj(obj, entry);
+				Object entryID = MapperFunctions.getId(entry);
+				if (entry.getClass() == String.class) {
+					updateParam += entryName + " = '" + entryID + "', ";
+				} else {
+					updateParam += entryName + " = " + entryID + ", ";
 				}
 				updateParam = updateParam.substring(0, updateParam.length() - 2);
+
 				sqlUpit = String.format(sqlUpit, updateParam);
 			}
 

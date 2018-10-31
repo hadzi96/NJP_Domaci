@@ -10,15 +10,16 @@ import app.annotations.Table;
 public class Ocena {
 
 	@Id
-	private int idOcene = 10;
-	@Column
+	private int idOcene;
+
 	private String predmet;
+	@Column
 	private int vrednost;
 
-	public Ocena(String predmet, int vrednost) {
-		super();
+	public Ocena(int id, String predmet, int vrednost) {
 		this.predmet = predmet;
 		this.vrednost = vrednost;
+		this.idOcene = id;
 	}
 
 	public int getId() {

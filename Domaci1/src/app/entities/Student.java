@@ -6,44 +6,50 @@ import java.util.Date;
 
 import app.annotations.Column;
 import app.annotations.Entity;
+import app.annotations.ManyToOne;
 import app.annotations.OneToMany;
 import app.annotations.OneToOne;
 import app.annotations.Table;
 
 @Entity
-@Table(name = "student")
+@Table(name = "Student")
 public class Student extends BasicEntity {
-	@Column(name = "IME")
-	private String ime;
+	@Column(name = "ime")
+	private String name;
 
-	private float nekiParametar = 55.5f;
-
-	@OneToOne
-	private Ocena ocena = new Ocena("Napredna Java", 10);
-
-	@OneToMany
-	private Collection<Ocena> skupOcena = new ArrayList<>();
-
-	private Date datum = new java.sql.Date(System.currentTimeMillis());
-
-	@Column(name = "prezime")
 	private String prezime;
 
-	public Student(String ime, String prezime) {
-		super(1);
-		this.ime = ime;
+	@Column
+	@OneToOne
+	private Profesor mentor;
+
+	@ManyToOne
+	private Fakultet fakultet;
+
+	@Column
+	@OneToMany
+	private Collection<Ocena> ocene = new ArrayList<>();
+
+	@Column
+	private Date datum = new java.sql.Date(System.currentTimeMillis());
+
+	public Student(int id, String name, String prezime, Profesor mentor, Fakultet fakultet, Collection<Ocena> ocene,
+			Date datum) {
+		super(id);
+		this.name = name;
 		this.prezime = prezime;
-
-		skupOcena.add(ocena);
-		skupOcena.add(ocena);
+		this.mentor = mentor;
+		this.fakultet = fakultet;
+		this.ocene = ocene;
+		this.datum = datum;
 	}
 
-	public String getIme() {
-		return ime;
+	public String getName() {
+		return name;
 	}
 
-	public void setIme(String ime) {
-		this.ime = ime;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPrezime() {
@@ -54,28 +60,28 @@ public class Student extends BasicEntity {
 		this.prezime = prezime;
 	}
 
-	public float getNekiParametar() {
-		return nekiParametar;
+	public Profesor getMentor() {
+		return mentor;
 	}
 
-	public void setNekiParametar(float nekiParametar) {
-		this.nekiParametar = nekiParametar;
+	public void setMentor(Profesor mentor) {
+		this.mentor = mentor;
 	}
 
-	public Ocena getOcena() {
-		return ocena;
+	public Fakultet getFakultet() {
+		return fakultet;
 	}
 
-	public void setOcena(Ocena ocena) {
-		this.ocena = ocena;
+	public void setFakultet(Fakultet fakultet) {
+		this.fakultet = fakultet;
 	}
 
-	public Collection<Ocena> getSkupOcena() {
-		return skupOcena;
+	public Collection<Ocena> getOcene() {
+		return ocene;
 	}
 
-	public void setSkupOcena(Collection<Ocena> skupOcena) {
-		this.skupOcena = skupOcena;
+	public void setOcene(Collection<Ocena> ocene) {
+		this.ocene = ocene;
 	}
 
 	public Date getDatum() {

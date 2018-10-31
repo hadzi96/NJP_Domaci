@@ -17,7 +17,7 @@ public class AspectORM {
 	ORMapper mapper = new ORMapper();
 
 	@Around("execution(public boolean ORMapper.insert(Object))")
-	public boolean interceptInsert(ProceedingJoinPoint pjp) {
+	public boolean interceptInsert(ProceedingJoinPoint pjp) throws Throwable {
 		Object[] cached = pjp.getArgs();
 		Object r = pjp.proceed(cached);
 		boolean retVal = (boolean) r;

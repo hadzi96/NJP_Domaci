@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.aspectj.lang.JoinPoint;
 
+import app.annotations.Column;
 import app.annotations.Entity;
 import app.annotations.Id;
 import app.annotations.Table;
@@ -119,10 +120,18 @@ public class MapperFunctions {
 			ArrayList<Polje> polja = new ArrayList<>();
 
 			for (Field field : fields) {
+
 				Class<?> type = field.getType();
 				String name = field.getName();
 				field.setAccessible(true);
 				Object value = field.get(obj);
+
+				if (field.isAnnotationPresent(Column.class)) {
+					Column col = field.getAnnotation(Column.class);
+					if (!col.name().equals("") && col.name() != null) {
+						name = col.name();
+					}
+				}
 
 				Polje p = new Polje(field, type, name, value);
 				polja.add(p);

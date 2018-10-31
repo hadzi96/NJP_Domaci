@@ -31,30 +31,35 @@ public class ORMapper {
 			for (Polje p : polja) {
 
 				if (MapperFunctions.isComplexType(p)) {
-					if (p.field.isAnnotationPresent(OneToOne.class))
+					if (p.field.isAnnotationPresent(OneToOne.class)) {
 						OneToOneInsert(p);
-					else {
-						if (p.field.isAnnotationPresent(OneToMany.class))
+
+						rows += p.name + ", ";
+						if (p.type == String.class)
+							values += "'" + p.value + "', ";
+						else
+							values += p.value + ", ";
+					} else {
+						if (p.field.isAnnotationPresent(OneToMany.class)) {
 							OneToManyInsert(p);
-						else {
-
-							if (p.field.isAnnotationPresent(ManyToOne.class))
+						} else {
+							if (p.field.isAnnotationPresent(ManyToOne.class)) {
 								ManyToOneInsert(p);
-							else {
-
-								if (p.field.isAnnotationPresent(ManyToMany.class))
+							} else {
+								if (p.field.isAnnotationPresent(ManyToMany.class)) {
 									ManyToManyInsert(p);
+								}
 							}
 						}
 					}
+				} else {
+					// sredjivanje query stringa
+					rows += p.name + ", ";
+					if (p.type == String.class)
+						values += "'" + p.value + "', ";
+					else
+						values += p.value + ", ";
 				}
-
-				// sredjivanje query stringa
-				rows += p.name + ", ";
-				if (p.type == String.class)
-					values += "'" + p.value + "', ";
-				else
-					values += p.value + ", ";
 			}
 
 			rows = rows.substring(0, rows.length() - 2);

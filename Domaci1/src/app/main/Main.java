@@ -9,14 +9,14 @@ public class Main {
 
 		Student st = new Student("Filip", "Hadzi-Ristic");
 		System.out.println("----------");
-		st.setIme("Ficko");
+		st.setIme("FILIP");
 		ORMapper mapper = new ORMapper();
 
 		try {
 			mapper.insert(st);
-			// Thread.sleep(3000);
+			Thread.sleep(3000);
 			st.setIme("Ficko");
-		} catch (Exception e) {
+		} catch (Exception e) { 
 			e.printStackTrace();
 		}
 	}

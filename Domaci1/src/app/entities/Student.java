@@ -10,7 +10,7 @@ import app.annotations.Table;
 @Entity
 @Table(name = "student")
 public class Student extends BasicEntity {
-	@Column(name = "ime")
+	@Column(name = "IME")
 	private String ime;
 
 	private float nekiParametar = 55.5f;

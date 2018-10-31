@@ -164,7 +164,7 @@ public class ORMapper {
 	}
 
 	private void ManyToManyInsert(Polje p) {
-
+		// previse se komplikuje sa UPDATE-om -> odustao od ove anotacije
 	}
 
 }
